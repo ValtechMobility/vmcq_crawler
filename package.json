@@ -1,0 +1,18 @@
+{
+  "name": "vmcq_crawler",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "UNLICENSED",
+  "devDependencies": {
+    "prettier": "^2.5.1"
+  },
+  "dependencies": {
+    "isomorphic-fetch": "^3.0.0",
+    "node-fetch": "^3.2.3"
+  }
+}
