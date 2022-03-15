@@ -27,6 +27,7 @@ const SERVER_URL = process.env.SERVER_URL;
 const API_KEY = process.env.API_KEY;
 const BB_URL = process.env.BB_URL;
 const FETCH_LICENSE = process.env.FETCH_LICENSE;
+const SCAN_DEBUG_MODE = process.env.SCAN_DEBUG_MODE;
 const IGNORE_OLD_PROJECTS = process.env.IGNORE_OLD_PROJECTS;
 const OLD_PROJECT_LIMIT = process.env.OLD_PROJECT_LIMIT;
 const TIMEOUT = process.env.TIMEOUT;
@@ -355,7 +356,7 @@ blacklist.add("ACMLCM/sc3_jira_abgleich");
 
 async function cdxgen(type, project, repo, name, branchName, dir, teamId) {
   const { stdout: out, code } = await exec(
-    `FETCH_LICENSE=${FETCH_LICENSE} ./cdxgen --type ${type} --server-url "${SERVER_URL}" --project-name "${project.key}/${repo.slug}/${name}" --api-key "${API_KEY}" --project-version "${branchName}" "${dir}"`
+    `SCAN_DEBUG_MODE=${SCAN_DEBUG_MODE} FETCH_LICENSE=${FETCH_LICENSE} ./cdxgen --type ${type} --server-url "${SERVER_URL}" --project-name "${project.key}/${repo.slug}/${name}" --api-key "${API_KEY}" --project-version "${branchName}" "${dir}"`
   );
   console.log(code, out);
 
