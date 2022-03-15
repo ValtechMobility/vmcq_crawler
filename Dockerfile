@@ -22,6 +22,7 @@ RUN jq --version
 RUN yq --version
 RUN xq --version
 
+COPY dep-plugins.sbt dep-plugins.sbt
 COPY package.json package.json
 COPY package-lock.json package-lock.json
 RUN npm ci
