@@ -36,6 +36,7 @@ blacklist.add("ACMLCM/infotainment-acceptance-tests");
 blacklist.add("ACMLCM/sc3_jira_abgleich");
 
 (async () => {
+  console.log("start");
   // download cdxgen if not available yet
   if (!fs.existsSync("./cdxgen")) {
     await exec(
@@ -260,7 +261,11 @@ blacklist.add("ACMLCM/sc3_jira_abgleich");
           teamId
         );
 
-        if (code === 0 && needslock) {
+        if (
+          code === 0 &&
+          needslock &&
+          fs.existsSync(dir + "/package-lock.json")
+        ) {
           fs.rmSync(dir + "/package-lock.json");
         }
       }
@@ -289,7 +294,7 @@ blacklist.add("ACMLCM/sc3_jira_abgleich");
           teamId
         );
 
-        if (code === 0 && needslock) {
+        if (code === 0 && needslock && fs.existsSync(dir + "/build.sbt.lock")) {
           fs.rmSync(dir + "/build.sbt.lock");
         }
       }
@@ -367,6 +372,15 @@ async function cdxgen(type, project, repo, name, branchName, dir, teamId) {
       },
     }
   );
+  if (!projectLookupRes.ok) {
+    console.log(
+      escName,
+      branchName,
+      projectLookupRes.status,
+      await projectLookupRes.text()
+    );
+    return 1;
+  }
   const projectLookup = await projectLookupRes.json();
   const projectId = projectLookup.uuid;
   await fetch(`${SERVER_URL}/api/v1/acl/mapping`, {
