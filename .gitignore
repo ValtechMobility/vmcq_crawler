@@ -1,6 +1,7 @@
 .idea/
 node_modules/
 reports/
-repos/
+repos/*
 cdxgen*
 gitleaks*
+sonar-scanner*

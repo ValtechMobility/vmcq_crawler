@@ -31,6 +31,6 @@ COPY dep-plugins.sbt dep-plugins.sbt
 COPY package.json package.json
 COPY package-lock.json package-lock.json
 RUN npm ci
-COPY index.js index.js
+COPY src/ src/
 
-CMD node index.js
+CMD node src/index.js
