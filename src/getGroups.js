@@ -1,4 +1,5 @@
 const fetch = require("isomorphic-fetch");
+const log = require("./log");
 module.exports = (BB_URL, BASIC_AUTH) =>
   async function (project) {
     const groupsRes = await fetch(
@@ -10,6 +11,7 @@ module.exports = (BB_URL, BASIC_AUTH) =>
       }
     );
     if (!groupsRes.ok) {
+      log("something went wrong fetching the groups");
       return [];
     }
     const groupValues = await groupsRes.json();
