@@ -186,4 +186,5 @@ const blacklist = new Set(BLACKLIST.split(","));
       await generateGitleaksReport(project, repo, directoryName);
     }
   }
+  log("end");
 })();
