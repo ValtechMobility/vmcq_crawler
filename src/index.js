@@ -126,7 +126,6 @@ const blacklist = new Set(BLACKLIST.split(","));
         repo
       );
       if (!branchName) {
-        log("couldn't get branch name");
         continue;
       }
 
