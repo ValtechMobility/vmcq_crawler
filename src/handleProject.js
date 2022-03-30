@@ -52,7 +52,11 @@ module.exports = (
       );
     }
 
-    const { stdout: out, code } = await exec(
+    const {
+      stdout: out,
+      stderr: err,
+      code,
+    } = await exec(
       `SCAN_DEBUG_MODE=${SCAN_DEBUG_MODE} \
      FETCH_LICENSE=${FETCH_LICENSE} \
      ./cdxgen \
@@ -63,7 +67,7 @@ module.exports = (
      --project-version "${branchName}" \
      "${dir}"`
     );
-    log(code, out);
+    log(code, out, err);
 
     if (code === 1) {
       return code;
