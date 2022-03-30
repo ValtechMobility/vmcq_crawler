@@ -114,6 +114,7 @@ const blacklist = new Set(BLACKLIST.split(","));
     for (let repo of await getRepos(project)) {
       log(repo.slug);
       if (blacklist.has(`${project.key}/${repo.slug}`)) {
+        log("blacklisted repo");
         continue;
       }
       const directoryName = `repos/${project.key}/${repo.slug}`;
@@ -125,6 +126,7 @@ const blacklist = new Set(BLACKLIST.split(","));
         repo
       );
       if (!branchName) {
+        log("couldn't get branch name");
         continue;
       }
 
