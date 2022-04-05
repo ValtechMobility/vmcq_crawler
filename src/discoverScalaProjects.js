@@ -19,9 +19,14 @@ module.exports = (handleProject) =>
         log("build.sbt.lock exists");
       } else {
         needsLock = true;
-        await exec(
+        const {
+          stdout: out,
+          stderr: err,
+          code,
+        } = await exec(
           `cd ${dir} && sbt -batch -addPluginSbtFile=../../../dep-plugins.sbt dependencyLockWrite`
         );
+        console.log(code, out, err);
       }
       const name = proj.split("/").slice(-2, -1);
       log(`scala project: ${name}`);
