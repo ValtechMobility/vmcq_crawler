@@ -1,11 +1,11 @@
 {
   "name": "vmcq_crawler",
-  "version": "1.0.0",
+  "version": "0.1.0",
   "description": "",
   "main": "src/index.js",
   "engines": {
-    "node": "^16.14.0",
-    "npm": "^8.3.1"
+    "node": "^18.0.0",
+    "npm": "^8.6.0"
   },
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
