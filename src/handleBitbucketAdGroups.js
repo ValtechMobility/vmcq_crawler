@@ -48,7 +48,7 @@ module.exports = (SERVER_URL, API_KEY, SONAR_HOST_URL, SONAR_LOGIN) =>
       const oidcGroupsRes = await fetch(
         `${SERVER_URL}/api/v1/oidc/group?searchText=${encodeURIComponent(
           cn
-        )}&pageSize=1&pageNumber=1`,
+        )}&pageSize=1000&pageNumber=1`,
         {
           method: "GET",
           headers: {
