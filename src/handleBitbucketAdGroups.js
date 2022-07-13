@@ -45,17 +45,30 @@ module.exports = (SERVER_URL, API_KEY, SONAR_HOST_URL, SONAR_LOGIN) =>
         },
         body: JSON.stringify({ name: cn }),
       });
-      if (createOidcTeamRes.status === 201) {
-        const createOidcBody = await createOidcTeamRes.json();
-        await fetch(`${SERVER_URL}/api/v1/oidc/mapping`, {
-          method: "PUT",
+      const oidcGroupsRes = await fetch(
+        `${SERVER_URL}/api/v1/oidc/group?searchText=${encodeURIComponent(
+          group.group.name
+        )}&pageSize=1&pageNumber=1`,
+        {
+          method: "GET",
           headers: {
             ["x-api-key"]: API_KEY,
-            ["Content-Type"]: "application/json",
           },
-          body: JSON.stringify({ team: teamId, group: createOidcBody.uuid }),
-        });
+        }
+      );
+      const oidcGroups = await oidcGroupsRes.json();
+      if (oidcGroups.length === 0) {
+        log("no oidc group with name found", group.group.name);
+        return;
       }
+      await fetch(`${SERVER_URL}/api/v1/oidc/mapping`, {
+        method: "PUT",
+        headers: {
+          ["x-api-key"]: API_KEY,
+          ["Content-Type"]: "application/json",
+        },
+        body: JSON.stringify({ team: teamId, group: oidcGroups[0].uuid }),
+      });
       // create sonar group
       await fetch(`${SONAR_HOST_URL}/api/user_groups/create`, {
         headers: {
