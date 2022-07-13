@@ -37,7 +37,7 @@ module.exports = (SERVER_URL, API_KEY, SONAR_HOST_URL, SONAR_LOGIN) =>
       const cn = cnEl[1];
       adGroupCns.push(cn);
       // create dtrack oidc group
-      const createOidcTeamRes = await fetch(`${SERVER_URL}/api/v1/oidc/group`, {
+      await fetch(`${SERVER_URL}/api/v1/oidc/group`, {
         method: "PUT",
         headers: {
           ["x-api-key"]: API_KEY,
@@ -47,7 +47,7 @@ module.exports = (SERVER_URL, API_KEY, SONAR_HOST_URL, SONAR_LOGIN) =>
       });
       const oidcGroupsRes = await fetch(
         `${SERVER_URL}/api/v1/oidc/group?searchText=${encodeURIComponent(
-          group.group.name
+          cn
         )}&pageSize=1&pageNumber=1`,
         {
           method: "GET",
@@ -57,7 +57,8 @@ module.exports = (SERVER_URL, API_KEY, SONAR_HOST_URL, SONAR_LOGIN) =>
         }
       );
       const oidcGroups = await oidcGroupsRes.json();
-      if (oidcGroups.length === 0) {
+      const oidcGroup = oidcGroups.find((group) => group.name === cn);
+      if (!oidcGroup) {
         log("no oidc group with name found", group.group.name);
         return;
       }
@@ -67,7 +68,7 @@ module.exports = (SERVER_URL, API_KEY, SONAR_HOST_URL, SONAR_LOGIN) =>
           ["x-api-key"]: API_KEY,
           ["Content-Type"]: "application/json",
         },
-        body: JSON.stringify({ team: teamId, group: oidcGroups[0].uuid }),
+        body: JSON.stringify({ team: teamId, group: oidcGroup.uuid }),
       });
       // create sonar group
       await fetch(`${SONAR_HOST_URL}/api/user_groups/create`, {
