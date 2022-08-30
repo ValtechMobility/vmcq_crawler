@@ -14,10 +14,13 @@ module.exports = (SERVER_URL, API_KEY) =>
     const team = await teamRes.json();
     await Promise.all(
       [
-        "VIEW_PORTFOLIO",
+        "BOM_UPLOAD",
         "POLICY_VIOLATION_ANALYSIS",
-        "VULNERABILITY_ANALYSIS",
+        "PROJECT_CREATION_UPLOAD",
+        "VIEW_POLICY_VIOLATION",
+        "VIEW_PORTFOLIO",
         "VIEW_VULNERABILITY",
+        "VULNERABILITY_ANALYSIS",
       ].map((permission) =>
         fetch(
           `${SERVER_URL}/api/v1/permission/${permission}/team/${team.uuid}`,
