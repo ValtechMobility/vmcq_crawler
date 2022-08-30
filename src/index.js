@@ -14,6 +14,7 @@ const IGNORE_OLD_PROJECTS = process.env.IGNORE_OLD_PROJECTS;
 const OLD_PROJECT_LIMIT = process.env.OLD_PROJECT_LIMIT;
 const TIMEOUT = process.env.TIMEOUT;
 const SONAR_LOGIN = process.env.SONAR_LOGIN;
+const ADMIN_AD_GROUP = process.env.ADMIN_AD_GROUP;
 const SONAR_HOST_URL = process.env.SONAR_HOST_URL;
 const BLACKLIST = process.env.BLACKLIST;
 
@@ -37,7 +38,11 @@ const getTeamNameToUuidMap = require("./getTeamNameToUuidMap")(
   API_KEY
 );
 const createDtrackTeam = require("./createDtrackTeam")(SERVER_URL, API_KEY);
-const setupSonarqube = require("./setupSonarqube")(SONAR_HOST_URL, SONAR_LOGIN);
+const setupSonarqube = require("./setupSonarqube")(
+  SONAR_HOST_URL,
+  SONAR_LOGIN,
+  ADMIN_AD_GROUP
+);
 const handleBitbucketAdGroups = require("./handleBitbucketAdGroups")(
   SERVER_URL,
   API_KEY,
